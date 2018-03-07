@@ -2,15 +2,23 @@
 var map;
 
 function initMap() {
-  let local = {lat: 40.9445, lng: -74.0574};
+  let latitude = 40.739915; let longitude = -73.999459;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        map.setCenter({lat: latitude, lng: longitude});
+    });
+  }
+  let local = {lat: latitude, lng: longitude};
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 15,
+    zoom: 10,
     center: local
   });
 }
 
 function addPlaces(places) {
-    for (p of places) {
+    for (let p of places) {
         console.log(p)
         let local = {lat: parseFloat(p.latitude), lng: parseFloat(p.longitude)};
         let marker = new google.maps.Marker({
@@ -21,7 +29,7 @@ function addPlaces(places) {
 }
 
 
-window.onload = function () {
+window.onload = function() {
 
     $.ajax({
         method: "GET",
