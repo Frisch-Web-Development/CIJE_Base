@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>login</title>
+<style>
+body {
+background-image: url("/static/wallpaper.jpg");
+}
+</style>
+</head>
+<body>
+<form method ="post" action = "/login">
+<font style = "font-size: 300%;" color = "white">Enter your email</font> 
+<input name="email" type="email" required autocomplete="on"/>
+<p>
+<font style = "font-size:300%;" color = "white">Enter your password</font>
+<input name="password" type="password" required autocomplete = "off"/>
+<button type="submit" />Login</button>
+</form>
+{% if invalid %}
+<div style="font-size: 200%; color: #E00">Please try again</div>
+{% endif %}
+</body>
+</html>

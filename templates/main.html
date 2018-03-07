@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Locator Service</title>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+    Welcome! {{ current_user.first_name }}
+    {% endif %}
+
+</body>
+</html>
