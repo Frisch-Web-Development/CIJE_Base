@@ -5,8 +5,7 @@ from data import resource
 from data import resources_list
 
 import secret
-
-import os
+from model import *
 
 print(resources_list.jewish_resources)
 
@@ -51,6 +50,20 @@ def login():
         return render_template('login.html', invalid=True)
 
 
+@app.route('/getlocations', methods=["GET"])
+def getLocations():
+    ls = Location.query.all()
+    return jsonify([s.serialize for s in ls])
+
+
+@app.route('/getlocation/<int:lid>', methods=["GET"])
+def getLocation(lid):
+    l = Location.query.filter_by(id=lid).first()
+    if l is not None:
+        return jsonify(l.serialize)
+    return "ERROR"
+
+
 @app.route('/information', methods=['GET', 'POST'])
 def info():
     return render_template('info.html', invalid=True, cat="Cello", dog="world")
@@ -81,50 +94,7 @@ def signup():
     return redirect("/")
 
 
-class Role(db.Model):
-    __tablename__ = 'roles'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-
-    def __repr__(self):
-        return '<Role %r>' % self.name
-
-
-class User(db.Model, UserMixin):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(64), unique=True, index=True)
-    first_name = db.Column(db.String(64), unique=False, index=True)
-    last_name = db.Column(db.String(64), unique=False, index=True)
-    role = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    password = db.Column(db.String(64), unique=False, index=True)
-    is_active = True
-
-    def __repr__(self):
-        return '<User %r>' % self.email
-
-
-class Location(db.Model):
-    __tablename__ = 'locations'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=False, index=True)
-    type = db.Column(db.String(64), unique=False, index=True)
-    contact = db.Column(db.String(64), unique=False, index=True)
-    long = db.Column(db.Float, unique=False)
-    lat = db.Column(db.Float, unique=False)
-    other = db.Column(db.Text, unique=False, index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-    def __init__(self, name, type, contact, lat, long, other):
-        self.name = name
-        self.type = validate_business_type(type)
-        self.contact = contact
-        self.lat = lat
-        self.long = long
-        self.other = other
-
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = 5000
     app.run(host='0.0.0.0', port=port)
+
