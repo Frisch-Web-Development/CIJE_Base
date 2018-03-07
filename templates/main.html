@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+    </style>
+
     <meta charset="UTF-8">
     <title>Locator Service</title>
 </head>
 <body>
+
+    <div id="map"></div>
+
     {% if current_user.is_authenticated %}
-    Welcome! {{ current_user.first_name }}
+        Welcome! {{ current_user.first_name }}
     {% endif %}
+
+
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCwN1jAlhqQu6Dus0khKvgeUpkrwPzpvkQ"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" async defer></script>
+    <script src="/static/js/main.js"></script>
+
 
 </body>
 </html>

@@ -1,9 +1,10 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+import main
 
+db = main.db
 
-db = SQLAlchemy()
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -32,9 +33,9 @@ class Location(db.Model):
     __tablename__ = 'locations'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=False, index=True)
-    type = db.Column(db.String(64), unique=False, index=True)
-    contact = db.Column(db.String(64), unique=False, index=True)
+    name = db.Column(db.String(128), unique=False, index=True)
+    type = db.Column(db.String(32), unique=False, index=True)
+    contact = db.Column(db.String(256), unique=False, index=True)
     long = db.Column(db.Float, unique=False)
     lat = db.Column(db.Float, unique=False)
     other = db.Column(db.Text, unique=False, index=True)
@@ -42,11 +43,14 @@ class Location(db.Model):
 
     @property
     def serialize(self):
-        """Return object data in easily serializeable format"""
+        """Return object data in easily serializable format"""
         return {
             'id': self.id,
             'name': self.name,
-            'type': self.type
+            'type': self.type,
+            'longitude': self.long,
+            'latitude': self.lat,
+            'other': self.other
        }
 
     def __init__(self, name, type, contact, lat, long, other):

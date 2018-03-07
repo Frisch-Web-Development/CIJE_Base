@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>add a location</title>
+</head>
+<body>
+    <form method = "POST" action = "/addlocation">
+        Enter name of location</font>
+        <input name="name" type="text" required autocomplete="on"/>
+        <p>
+        Enter type of Location</font>
+        <input name="type" type="text" required autocomplete = "off"/>
+        <p/>
+        Enter the address
+        <input name="location" type="text" required autocomplete = "off"/>
+        <p/>
+        Longitude <input name="longitude" type="number" required />
+        <p/>
+        Latitude <input name="latitude" type="number" required />
+        <p/>
+        Description of location<textarea name="other"></textarea>
+        <p/>
+        <button type="submit" />Submit</button>
+    </form>
+{% if invalid %}
+    <div style="font-size: 200%; color: #E00">Please try again</div>
+{% endif %}
+</body>
+</html>
