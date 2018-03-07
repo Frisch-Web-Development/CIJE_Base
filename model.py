@@ -61,3 +61,6 @@ class Location(db.Model):
         self.long = long
         self.other = other
 
+    def __repr__(self):
+        return self.name + ", " + self.type + " at coordinates " + self.lat + ", " + self.long
+

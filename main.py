@@ -82,7 +82,7 @@ def getLocation(lid):
 @login_required
 def deleteLocation(lid):
     l = Location.query.filter_by(id=lid).first()
-    if l is not None:
+    if (l is not None) and (l.user_id == current_user.id):
         db.session.delete(l)
         db.session.commit()
     return "OK"
