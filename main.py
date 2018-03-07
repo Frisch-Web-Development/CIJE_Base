@@ -1,10 +1,14 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from data import resource
+from data import resources_list
 
 import secret
 
 import os
+
+print(resources_list.jewish_resources)
 
 app = Flask(__name__)
 
@@ -98,6 +102,27 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User %r>' % self.email
+
+
+class Location(db.Model):
+    __tablename__ = 'locations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=False, index=True)
+    type = db.Column(db.String(64), unique=False, index=True)
+    contact = db.Column(db.String(64), unique=False, index=True)
+    long = db.Column(db.Float, unique=False)
+    lat = db.Column(db.Float, unique=False)
+    other = db.Column(db.Text, unique=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __init__(self, name, type, contact, lat, long, other):
+        self.name = name
+        self.type = validate_business_type(type)
+        self.contact = contact
+        self.lat = lat
+        self.long = long
+        self.other = other
 
 
 if __name__ == "__main__":
