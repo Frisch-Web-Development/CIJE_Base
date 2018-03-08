@@ -1,6 +1,6 @@
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
+from flask_login import UserMixin
 import main
 
 db = main.db
