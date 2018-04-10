@@ -22,10 +22,20 @@ function initMap() {
 function addPlaces(places) {
     for (let p of places) {
         console.log(p)
+
+        let currentImage = {
+            url: "/static/icons/" + p.type.toLowerCase() + ".png",
+            scaledSize: new google.maps.Size(32, 32),
+            origin: new google.maps.Point(0,0),
+            anchor: new google.maps.Point(0, 0),
+            labelOrigin: new google.maps.Point(16, 38)
+        }
+
         let local = {lat: parseFloat(p.latitude), lng: parseFloat(p.longitude)};
         let marker = new google.maps.Marker({
             position: local,
             title: p.name,
+            icon: currentImage,
             map: map
         });
         let infowindow = new google.maps.InfoWindow({
@@ -37,7 +47,6 @@ function addPlaces(places) {
         });
     }
 }
-
 
 window.onload = function() {
 
@@ -63,4 +72,3 @@ window.onload = function() {
     })
 
 };
-
